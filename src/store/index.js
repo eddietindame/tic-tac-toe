@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware } from 'redux'
 
+import logger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
 import { createEpicMiddleware } from 'redux-observable'
@@ -13,7 +14,7 @@ import rootEpic from './epics'
 export default function configureStore(initialState) {
   const sagaMiddleware = createSagaMiddleware()
   const epicMiddleware = createEpicMiddleware()
-  const middlewares = [sagaMiddleware, epicMiddleware, thunkMiddleware];
+  const middlewares = [sagaMiddleware, epicMiddleware, thunkMiddleware, logger]
   const middlewareEnhancer = applyMiddleware(...middlewares)
 
   const enhancers = [middlewareEnhancer]
