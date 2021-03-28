@@ -1,4 +1,4 @@
-import { createBoard, board, game } from "."
+import { createBoard, board, game } from '.'
 import * as Actions from '../actions/moves'
 
 describe('createBoard', () => {
@@ -27,12 +27,20 @@ describe('board', () => {
 
     expect(result).toEqual(state)
   })
+
+  it('should reset to a default board state of length 3', () => {
+    const expectedState = createBoard(3)
+    const result = board(undefined, Actions.resetGame())
+
+    expect(result).toEqual(expectedState)
+  })
 })
 
 describe('game', () => {
-  it('should create a default game state with current player and no winner', () => {
+  it('should create a default game state with current player, no game over and no winner', () => {
     const expectedState = {
       currentPlayer: 'X',
+      isGameOver: false,
       winner: null
     }
     const result = game(undefined, {})
@@ -40,14 +48,36 @@ describe('game', () => {
     expect(result).toEqual(expectedState)
   })
 
-  it('should update a co-ordinate to match the currentPlayer', () => {
-    const xState = { currentPlayer: 'X', winner: null }
-    const oState = { currentPlayer: 'O', winner: null }
+  it('should update currentPlayer to match the current player', () => {
+    const xState = { currentPlayer: 'X', isGameOver: false, winner: null }
+    const oState = { currentPlayer: 'O', isGameOver: false, winner: null }
 
     const xResult = game(xState, Actions.selectCell('X', 0, 0))
     const oResult = game(oState, Actions.selectCell('X', 0, 0))
 
     expect(xResult).toEqual(oState)
     expect(oResult).toEqual(xState)
+  })
+
+  it('should set game over state', () => {
+    const expectedState = {
+      currentPlayer: 'X',
+      isGameOver: true,
+      winner: null
+    }
+    const result = game(undefined, Actions.gameOver())
+
+    expect(result).toEqual(expectedState)
+  })
+
+  it('should set a winner', () => {
+    const expectedState = {
+      currentPlayer: 'X',
+      isGameOver: true,
+      winner: 'X'
+    }
+    const result = game(undefined, Actions.gameOver('X'))
+
+    expect(result).toEqual(expectedState)
   })
 })

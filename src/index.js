@@ -1,17 +1,18 @@
-import React from 'react';
+import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.scss'
-import { Board } from './components/board'
-import configureStore from './store'
 import { Provider } from 'react-redux'
+
+import { Game } from './components/game'
+import configureStore from './store'
+import './index.scss'
 
 const store = configureStore()
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Board />
+      <Game />
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 )

@@ -1,3 +1,41 @@
-.Board {
+$cellSize: 100;
+$cellColour1: #fffeec;
+$cellColour2: #ffedbc;
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: #{$cellSize * 3}px;
+  height: #{$cellSize * 3}px;
   margin: auto;
+  padding: 15px;
+
+  &--disabled {
+    opacity: 50%;
+    pointer-events: none;
+  }
+
+  &__cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: #{$cellSize}px;
+    height: #{$cellSize}px;
+    background-color: $cellColour1;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover, &:focus, &:active {
+      background-color: darken($cellColour1, 10%);
+    }
+
+    &:nth-child(even) {
+      background-color: $cellColour2;
+
+      &:hover, &:focus, &:active {
+        background-color: darken($cellColour2, 10%);
+      }
+    }
+  }
 }
